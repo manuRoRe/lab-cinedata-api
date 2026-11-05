@@ -14,7 +14,7 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 const origenesPermitidos = process.env.CORS_ORIGIN.split(",");
-app.use(cors({cors: origenesPermitidos}));
+app.use(cors({ cors: origenesPermitidos }));
 
 app.use(express.json());
 app.use(logger);
