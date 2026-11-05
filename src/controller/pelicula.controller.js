@@ -1,4 +1,5 @@
-const peliculasService = require("../services/pelicula.service.js");
+const { matchedData } = require("express-validator");
+const peliculasService =require("../services/pelicula.service.js");
 const resenasService = require("../services/resena.service.js");
 
 const ORDENES = {
@@ -33,6 +34,14 @@ async function listar(req, res) {
 async function top(req, res) {
     const peliculas = await peliculasService.mejores(3);
     res.json(peliculas.map(p => p.resumen()));
+}
+
+async function estadisticas(req, res) {
+    // En Express 5 req.query es de solo lectura: toInt() no puede reescribirlo,
+    // así que se lee el valor ya saneado con matchedData.
+    const { minimo } = matchedData(req, { locations: ["query"] });
+    const datos = await peliculasService.estadisticasPorGenero(minimo);
+    res.json(datos);
 }
 
 async function obtener(req, res) {
@@ -85,4 +94,4 @@ async function crearResena(req, res){
 
 }
 
-module.exports = { listar, top, obtener, resenas, crear, actualizar, eliminar, crearResena };
+module.exports = { listar, top, estadisticas, obtener, resenas, crear, actualizar, eliminar, crearResena };

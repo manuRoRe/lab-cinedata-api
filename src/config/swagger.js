@@ -64,7 +64,7 @@ const opciones = {
             }
         }
     },
-       apis: [path.join(__dirname, '../routes/*.js')]
+       apis: [path.join(__dirname, '../routes/*.js').split(path.sep).join('/')]
 };
 
 module.exports = swaggerJsdoc(opciones);       

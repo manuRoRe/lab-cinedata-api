@@ -1,0 +1,55 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      NODE_ENV: test
+      # Los tests usan mongodb-memory-server; no se necesitan secretos reales.
+      # Valores de prueba por si algun modulo los lee al cargarse.
+      JWT_SECRET: secreto-solo-para-ci
+      JWT_EXPIRES_IN: 1h
+      CORS_ORIGIN: http://localhost:5500
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      # package-lock.json esta en .gitignore pero SIGUE versionado: npm ci lo exige
+      # y da instalaciones reproducibles. Si algun dia se deja de versionar, hay
+      # que quitarlo de .gitignore o cambiar a npm install (y el cache npm fallaria).
+      - run: npm ci
+
+      - name: Cache binario de mongod (mongodb-memory-server)
+        uses: actions/cache@v4
+        with:
+          path: ~/.cache/mongodb-binaries
+          key: mongod-${{ runner.os }}-${{ hashFiles('package-lock.json') }}
+
+      - run: npm test
+
+      # Bloqueante solo para dependencias de produccion.
+      - name: npm audit (produccion, bloqueante)
+        run: npm audit --omit=dev --audit-level=high
+
+      # nodemon ^1.0.2 (dev) arrastra advisories conocidos; se informa sin bloquear.
+      - name: npm audit (completo, informativo)
+        run: npm audit --audit-level=high
+        continue-on-error: true
