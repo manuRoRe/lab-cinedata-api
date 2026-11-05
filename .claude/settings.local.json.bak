@@ -1,0 +1,66 @@
+¿?{
+  "hooks": {
+    "SessionStart": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node \"C:\\TheBridge\\BootSevilla-08-2026\\visor-agentes\\hooks\\claude\\enviar.mjs\""
+          }
+        ]
+      }
+    ],
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node \"C:\\TheBridge\\BootSevilla-08-2026\\visor-agentes\\hooks\\claude\\enviar.mjs\""
+          }
+        ]
+      }
+    ],
+    "PreToolUse": [
+      {
+        "matcher": "*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node \"C:\\TheBridge\\BootSevilla-08-2026\\visor-agentes\\hooks\\claude\\enviar.mjs\""
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node \"C:\\TheBridge\\BootSevilla-08-2026\\visor-agentes\\hooks\\claude\\enviar.mjs\""
+          }
+        ]
+      }
+    ],
+    "SubagentStop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node \"C:\\TheBridge\\BootSevilla-08-2026\\visor-agentes\\hooks\\claude\\enviar.mjs\""
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "node \"C:\\TheBridge\\BootSevilla-08-2026\\visor-agentes\\hooks\\claude\\enviar.mjs\""
+          }
+        ]
+      }
+    ]
+  }
+}
