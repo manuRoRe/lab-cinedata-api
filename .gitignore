@@ -3,3 +3,5 @@ node_modules
 demo-modulos
 package-lock.json
 .claude/settings.local.json
+CLAUDE.md
+AGENTS.md
